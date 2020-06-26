@@ -1,0 +1,18 @@
+.person {
+  width: 287px;
+  height: 63px;
+  background-color: #f2fafe;
+  margin-bottom: 16px;
+  color: #3a3a3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.person--male {
+  background-color: #f2fafe;
+}
+
+.person--female {
+  background-color: #fbeaf1;
+}
