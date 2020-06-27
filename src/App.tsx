@@ -1,10 +1,10 @@
 import React from "react";
 import { familyTree } from "./data";
 import { TreeLevel, Debug } from "./components";
-import { processData } from "./utils";
+import { buildTreeData } from "./utils";
 
 function App() {
-  const processedData = processData(familyTree);
+  const processedData = buildTreeData(familyTree);
 
   console.log("processedData: ", processedData);
 

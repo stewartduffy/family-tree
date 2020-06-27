@@ -6,8 +6,9 @@ const TreeLevel = ({ people }: any) => {
     <div>
       {people.map((person: any) => {
         console.log("person: ", person);
+
         return (
-          <ul>
+          <ul key={`person=${person.id}`}>
             <Person {...person} />
 
             {person.children && person.children.length > 0 && (

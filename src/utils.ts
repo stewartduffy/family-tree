@@ -1,46 +1,28 @@
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
+export const buildTreeData = (data: any) => {
+  const preProcess = (data: any) => {
+    return data.map((person: any) => {
+      return {
+        ...person,
+        childrenIds: person.children,
+        parentId: person.parents[0] || null,
+      };
+    });
+  };
 
-export const processChildren = (children: Array<any>, people: Array<any>) => {
-  const processedChildren = children
-    .map((childId: number) => {
-      return people.find(({ id }) => id === childId);
-    })
-    .filter((element: any) => (!element ? false : true));
-
-  console.log("xxx: ", processedChildren);
-  console.log("xxx: ", processData(processedChildren));
-
-  return processedChildren;
-};
-
-export const processData = (data: any) => {
-  const people = cloneDeep(data);
-  console.log("peopleL ", people);
-
-  return (
-    people
-      // @ts-ignore
-      .map(({ children, ...rest }) => {
-        const hasChildren = !isEmpty(children);
-
-        if (hasChildren) {
-          return {
-            // children: processChildren(children, people),
-            children: children
-              .map((childId: number) => {
-                return people.find(({ id }: any) => id === childId);
-              })
-              .filter((element: any) => (!element ? false : true)),
-            ...rest,
-          };
-        }
-
-        return {
-          children,
-          ...rest,
-        };
+  const getChildren = (people: any, id = null, link = "parentId") => {
+    return people
+      .filter((person: any) => {
+        return person[link] === id;
       })
-      .filter((person: any) => isEmpty(person.parents))
-  );
+      .map((person: any) => {
+        return {
+          ...person,
+          children: getChildren(people, person.id),
+        };
+      });
+  };
+
+  const preProcessedItems = preProcess(data);
+
+  return getChildren(preProcessedItems);
 };
