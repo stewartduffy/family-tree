@@ -1,13 +1,17 @@
 import React from "react";
 import { familyTree } from "./data";
-import { Person } from "./components";
+import { TreeLevel, Debug } from "./components";
+import { processData } from "./utils";
 
 function App() {
+  const processedData = processData(familyTree);
+
+  console.log("processedData: ", processedData);
+
   return (
     <div>
-      {familyTree.map((person) => {
-        return <Person {...person} />;
-      })}
+      <TreeLevel people={processedData} />
+      <Debug data={processedData} />
     </div>
   );
 }
